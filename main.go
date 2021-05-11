@@ -1,9 +1,10 @@
 package main
+
 import "fmt"
-import "./BLC"
+import "helloworldblock/BLC"
+
 func main() {
 
-	intVal :=BLC.CreateGenesisBlock("Genenis Block")
-
+	intVal := BLC.CreateGenesisBlock("Genenis Block")
 	fmt.Println(intVal)
 }
