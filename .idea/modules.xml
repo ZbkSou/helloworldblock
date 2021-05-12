@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/HelloWordBlockGo.iml" filepath="$PROJECT_DIR$/HelloWordBlockGo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/hellowordblock.iml" filepath="$PROJECT_DIR$/.idea/hellowordblock.iml" />
     </modules>
   </component>
 </project>
