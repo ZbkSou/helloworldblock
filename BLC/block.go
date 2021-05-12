@@ -1,9 +1,7 @@
 package BLC
 
 import (
-	"bytes"
-	"crypto/sha256"
-	"strconv"
+	"fmt"
 	"time"
 )
 
@@ -18,34 +16,26 @@ type Block struct {
 	Timestamp int64
 	//	hash
 	Hash []byte
-}
-
-// SetHash 设置区块的哈希
-
-func (block *Block) SetHash() {
-	//	height转化成byte
-	heightBytes := IntToHex(block.Height)
-	// 将时间戳转化成byte
-	timeString := strconv.FormatInt(block.Timestamp, 2)
-	timeBytes := []byte(timeString)
-
-	//拼接所有属性
-	blockBytes := bytes.Join([][]byte{heightBytes, block.PrevBlockHash, block.Data, timeBytes, block.Hash}, []byte{})
-
-	hash := sha256.Sum256(blockBytes)
-	block.Hash = hash[:]
+	//	Nonce
+	Nonce int64
 }
 
 // NewBlock 创建新的区块
 func NewBlock(data string, height int64, prevBlockHash []byte) *Block {
 	//创建区块
 	block := &Block{height, prevBlockHash,
-		[]byte(data), time.Now().Unix(), nil}
-	//给区块生成hash
-	block.SetHash()
+		[]byte(data), time.Now().Unix(), nil, 0}
+
+	//工作量证明
+	pow := NewProofOfWork(block)
+	fmt.Println()
+	hash, nonce := pow.Run()
+
+	block.Hash = hash[:]
+	block.Nonce = nonce
 	return block
 }
 
-func  CreateGenesisBlock(data string) *Block {
-	return NewBlock(data,1,[]byte{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0})
+func CreateGenesisBlock(data string) *Block {
+	return NewBlock(data, 1, []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
 }
