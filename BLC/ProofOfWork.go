@@ -24,6 +24,8 @@ func NewProofOfWork(block *Block) *ProofOfWork {
 
 	return &ProofOfWork{block, target}
 }
+
+//区块数据拼接到一个数组
 func (pow *ProofOfWork) prepareData(nonce int) []byte {
 	data := bytes.Join([][]byte{
 		pow.Block.PrevBlockHash,
@@ -36,6 +38,7 @@ func (pow *ProofOfWork) prepareData(nonce int) []byte {
 	return data
 }
 
+//算出满足工作量证明的hsh
 func (proofOfWork *ProofOfWork) Run() ([]byte, int64) {
 	//1.blockP拼接数组
 
@@ -49,10 +52,21 @@ func (proofOfWork *ProofOfWork) Run() ([]byte, int64) {
 		hash = sha256.Sum256(dataBytes)
 		fmt.Printf("\r%x", hash)
 		hashInt.SetBytes(hash[:])
+		//通过比较大小来判断是否满足要求工作量证明
 		if proofOfWork.target.Cmp(&hashInt) == 1 {
 			break
 		}
 		nonce += 1
 	}
 	return hash[:], int64(nonce)
+}
+
+//判断当前hash,只与工作量正面来比较 是否有效
+func (proofOfWork *ProofOfWork) IsValid() bool {
+	var hashInt big.Int
+	hashInt.SetBytes(proofOfWork.Block.Hash)
+	if proofOfWork.target.Cmp(&hashInt) == 1 {
+		return true
+	}
+	return false
 }
