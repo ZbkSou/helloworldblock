@@ -13,5 +13,9 @@ func main() {
 	Blockchain.AddBlockToBlockchain("send 300RMB to zhangsan", Blockchain.Blocks[len(Blockchain.Blocks)-1].Height+1, Blockchain.Blocks[len(Blockchain.Blocks)-1].Hash)
 	Blockchain.AddBlockToBlockchain("send 500RMB to zhangsan", Blockchain.Blocks[len(Blockchain.Blocks)-1].Height+1, Blockchain.Blocks[len(Blockchain.Blocks)-1].Hash)
 	fmt.Println(Blockchain.Blocks)
+	bytes := Blockchain.Blocks[1].Serialize()
+	fmt.Println(bytes)
+	block := BLC.DeserializeBlock(bytes)
+	fmt.Print(block)
 
 }
