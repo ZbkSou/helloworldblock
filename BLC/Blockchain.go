@@ -17,6 +17,11 @@ type Blockchain struct {
 	DB  *bolt.DB //数据库
 }
 
+type BlockchainIterator struct {
+	CurrentHash []byte
+	DB          *bolt.DB
+}
+
 //创建带有创世区块的区块链
 func CreateBlockchainWithGenesisBlock() *Blockchain {
 	db, err := bolt.Open(dbName, 0600, nil)
@@ -85,35 +90,21 @@ func (blc *Blockchain) AddBlockToBlockchain(data string) {
 
 //遍历打印所有区块信息
 func (blc *Blockchain) PrintChain() {
-	var block *Block
-	var currentHash []byte = blc.Tip
+	blockchainIterator := blc.Iterator()
 	for {
-		err := blc.DB.View(func(tx *bolt.Tx) error {
-			b := tx.Bucket([]byte(blockTableName))
-			if b != nil {
-				//获取当前区块
-				blockBytes := b.Get(currentHash)
-				block = DeserializeBlock(blockBytes)
-				fmt.Println("===================")
-				fmt.Printf("height : %d\n", block.Height)
-				fmt.Printf("PrevBlockHash : %x\n", block.PrevBlockHash)
-				fmt.Printf("Data : %s\n", block.Data)
-				fmt.Printf("Timestamp : %s\n", time.Unix(block.Timestamp, 0).Format("2006-01-02 03:04:05 PM"))
-				fmt.Printf("Hash : %x\n", block.Hash)
-				fmt.Printf("Nonce : %d\n", block.Nonce)
-				fmt.Println("===================")
-			}
-			return nil
-		})
-		if err != nil {
-			log.Panic(err)
-		}
+		block := blockchainIterator.Next()
+		fmt.Println("===================")
+		fmt.Printf("height : %d\n", block.Height)
+		fmt.Printf("PrevBlockHash : %x\n", block.PrevBlockHash)
+		fmt.Printf("Data : %s\n", block.Data)
+		fmt.Printf("Timestamp : %s\n", time.Unix(block.Timestamp, 0).Format("2006-01-02 03:04:05 PM"))
+		fmt.Printf("Hash : %x\n", block.Hash)
+		fmt.Printf("Nonce : %d\n", block.Nonce)
+		fmt.Println("===================")
 		var hashInt big.Int
 		hashInt.SetBytes(block.PrevBlockHash)
 		if big.NewInt(0).Cmp(&hashInt) == 0 {
 			break
 		}
-		currentHash = block.PrevBlockHash
-
 	}
 }
