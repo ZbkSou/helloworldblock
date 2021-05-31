@@ -1,18 +1,13 @@
 package main
 
 import (
-	"helloworldblock/BLC"
+	"flag"
+	"fmt"
 )
 
 func main() {
-
-	Blockchain := BLC.CreateBlockchainWithGenesisBlock()
-	defer Blockchain.DB.Close()
-
-	////	新区快
-	Blockchain.AddBlockToBlockchain("send 100RMB to zhangsan")
-	Blockchain.AddBlockToBlockchain("send 300RMB to zhangsan")
-	Blockchain.AddBlockToBlockchain("send 500RMB to zhangsan")
-	Blockchain.PrintChain()
-
+	addBlockCmd := flag.NewFlagSet("addBlock", flag.ExitOnError)
+	printChainCmd := flag.NewFlagSet("printchain", flag.ExitOnError)
+	flag.Parse()
+	fmt.Printf("%s\n", *flagPrintChainCmd)
 }
