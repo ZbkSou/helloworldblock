@@ -44,7 +44,7 @@ func CreateGenesisBlock(data string) *Block {
 	return NewBlock(data, 1, []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
 }
 
-//将区块序列化成字节数字
+//将区块序列化成字节数组
 func (block *Block) Serialize() []byte {
 	var result bytes.Buffer
 	encode := gob.NewEncoder(&result)
