@@ -23,6 +23,10 @@ func isValidArgs()  {
 
 }
 
+func (cli *CLI)addBlock(data string)  {
+	cli.Blockchain.AddBlockToBlockchain(data)
+
+}
 
 func (cli *CLI)Run() {
 	isValidArgs()
@@ -51,6 +55,8 @@ func (cli *CLI)Run() {
 			printUsage()
 			os.Exit(1)
 		}
+		fmt.Println(*flagAddBlockData)
+		cli.addBlock(*flagAddBlockData)
 	}
 	if printChainCmd.Parsed(){
 		fmt.Println("print all data")

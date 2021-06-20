@@ -1,13 +1,14 @@
 package main
 
 import (
-	"flag"
-	"fmt"
+	"./BLC"
+
 )
 
 func main() {
-	addBlockCmd := flag.NewFlagSet("addBlock", flag.ExitOnError)
-	printChainCmd := flag.NewFlagSet("printchain", flag.ExitOnError)
-	flag.Parse()
-	fmt.Printf("%s\n", *flagPrintChainCmd)
+
+	blockchain := BLC.CreateBlockchainWithGenesisBlock()
+	defer blockchain.DB.Close()
+	cli := BLC.CLI{blockchain}
+	cli.Run()
 }
