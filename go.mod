@@ -1,4 +1,4 @@
-module hellowordblock
+module helloworldblock
 
 go 1.16
 

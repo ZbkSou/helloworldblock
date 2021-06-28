@@ -1,7 +1,7 @@
 package main
 
 import (
-	"hellowordblock/BLC"
+	"helloworldblock/BLC"
 )
 
 func main() {
