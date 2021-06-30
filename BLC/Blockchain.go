@@ -27,7 +27,18 @@ type BlockchainIterator struct {
 func CreateBlockchainWithGenesisBlock() *Blockchain {
 	if dbExists() {
 		fmt.Println("创世区块已经存在")
-		os.Exit(1)
+		db, err := bolt.Open(dbName, 0600, nil)
+		if err != nil {
+			log.Fatal(err)
+		}
+		err = db.Update(func(tx *bolt.Tx) error {
+			b := tx.Bucket([]byte(blockTableName))
+			hash := b.Get()
+			return nil
+		})
+		if err != nil {
+			log.Panic(err)
+		}
 	}
 	db, err := bolt.Open(dbName, 0600, nil)
 	if err != nil {
