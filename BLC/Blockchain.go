@@ -31,14 +31,18 @@ func CreateBlockchainWithGenesisBlock() *Blockchain {
 		if err != nil {
 			log.Fatal(err)
 		}
+		var blockchain *Blockchain
 		err = db.Update(func(tx *bolt.Tx) error {
 			b := tx.Bucket([]byte(blockTableName))
-			hash := b.Get()
+			hash := b.Get([]byte("l"))
+			blockchain = &Blockchain{hash, db}
+
 			return nil
 		})
 		if err != nil {
 			log.Panic(err)
 		}
+		return blockchain
 	}
 	db, err := bolt.Open(dbName, 0600, nil)
 	if err != nil {
