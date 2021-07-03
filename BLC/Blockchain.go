@@ -36,7 +36,6 @@ func CreateBlockchainWithGenesisBlock() *Blockchain {
 			b := tx.Bucket([]byte(blockTableName))
 			hash := b.Get([]byte("l"))
 			blockchain = &Blockchain{hash, db}
-
 			return nil
 		})
 		if err != nil {
