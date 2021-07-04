@@ -8,12 +8,12 @@ import (
 )
 
 type CLI struct {
-	Blockchain *Blockchain
 }
 
 func printUsage() {
 
 	fmt.Println("\nUsage:")
+	fmt.Println("\t createblockchain -data -- 交易数据 ")
 	fmt.Println("\t addblock -data DATA -- 交易数据")
 	fmt.Println("\t printchain -- 输出区块信息")
 }
@@ -27,18 +27,36 @@ func isValidArgs() {
 }
 
 func (cli *CLI) addBlock(data string) {
-	cli.Blockchain.AddBlockToBlockchain(data)
-
+	if DBExists() == false {
+		fmt.Println("数据不存在....")
+		os.Exit(1)
+	}
+	blockchain := BlockchainObject()
+	defer blockchain.DB.Close()
+	blockchain.AddBlockToBlockchain(data)
 }
 func (cli *CLI) printchain() {
-	cli.Blockchain.PrintChain()
+	if DBExists() == false {
+		fmt.Println("数据不存在....")
+		os.Exit(1)
+	}
+	blockchain := BlockchainObject()
+	defer blockchain.DB.Close()
+	blockchain.PrintChain()
+}
+func (cli *CLI) createGenesisBlockchain(data string) {
+	CreateBlockchainWithGenesisBlock(data)
+	BlockchainObject().DB.Close()
 }
 func (cli *CLI) Run() {
 	isValidArgs()
 	addBlockCmd := flag.NewFlagSet("addblock", flag.ExitOnError)
 	printChainCmd := flag.NewFlagSet("printchain", flag.ExitOnError)
+	createblockchainCmd := flag.NewFlagSet("createblockchain", flag.ExitOnError)
 
 	flagAddBlockData := addBlockCmd.String("data", "zbk", "交易数据")
+
+	flagCreateBlockchainWithData := createblockchainCmd.String("data", "Genesis block data ......", "创世块")
 
 	switch os.Args[1] {
 	case "addblock":
@@ -51,10 +69,16 @@ func (cli *CLI) Run() {
 		if err != nil {
 			log.Panic(err)
 		}
+	case "createblockchain":
+		err := createblockchainCmd.Parse(os.Args[2:])
+		if err != nil {
+			log.Panic(err)
+		}
 	default:
 		printUsage()
 		os.Exit(1)
 	}
+	//增添区块信息
 	if addBlockCmd.Parsed() {
 		if *flagAddBlockData == "" {
 			printUsage()
@@ -63,9 +87,21 @@ func (cli *CLI) Run() {
 		fmt.Println(*flagAddBlockData)
 		cli.addBlock(*flagAddBlockData)
 	}
+
+	// 打印所有区块
 	if printChainCmd.Parsed() {
 		fmt.Println("\nprint all data")
 		cli.printchain()
+	}
+
+	//创建区块链
+	if createblockchainCmd.Parsed() {
+		if *flagCreateBlockchainWithData == "" {
+			printUsage()
+			os.Exit(1)
+		}
+		fmt.Println(*flagCreateBlockchainWithData)
+		cli.createGenesisBlockchain(*flagCreateBlockchainWithData)
 	}
 
 }

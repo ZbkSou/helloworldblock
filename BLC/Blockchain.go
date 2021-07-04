@@ -24,30 +24,18 @@ type BlockchainIterator struct {
 }
 
 //创建带有创世区块的区块链
-func CreateBlockchainWithGenesisBlock() *Blockchain {
-	if dbExists() {
+func CreateBlockchainWithGenesisBlock(data string) *Blockchain {
+	//判断数据库是否存在
+	if DBExists() {
 		fmt.Println("创世区块已经存在")
-		db, err := bolt.Open(dbName, 0600, nil)
-		if err != nil {
-			log.Fatal(err)
-		}
-		var blockchain *Blockchain
-		err = db.Update(func(tx *bolt.Tx) error {
-			b := tx.Bucket([]byte(blockTableName))
-			hash := b.Get([]byte("l"))
-			blockchain = &Blockchain{hash, db}
-			return nil
-		})
-		if err != nil {
-			log.Panic(err)
-		}
-		return blockchain
+		os.Exit(1)
 	}
+	//创建创世区块
+	fmt.Println("创建创世区块...")
 	db, err := bolt.Open(dbName, 0600, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
-	var blockHash []byte
 	err = db.Update(func(tx *bolt.Tx) error {
 		b := tx.Bucket([]byte(blockTableName))
 		//检查表是否存在
@@ -59,7 +47,9 @@ func CreateBlockchainWithGenesisBlock() *Blockchain {
 			}
 		}
 		if b != nil {
-			genesisBlock := CreateGenesisBlock("Genesis data")
+			// 创建创世区块
+			genesisBlock := CreateGenesisBlock(data)
+			// 将创世区块储存到表
 			err := b.Put(genesisBlock.Hash, genesisBlock.Serialize())
 			if err != nil {
 				log.Panic(err)
@@ -69,11 +59,11 @@ func CreateBlockchainWithGenesisBlock() *Blockchain {
 			if err != nil {
 				log.Panic(err)
 			}
-			blockHash = genesisBlock.Hash
+
 		}
 		return nil
 	})
-	return &Blockchain{blockHash, db}
+	return nil
 }
 
 //增加区块到链
@@ -107,7 +97,7 @@ func (blc *Blockchain) AddBlockToBlockchain(data string) {
 	}
 }
 
-func dbExists() bool {
+func DBExists() bool {
 	if _, err := os.Stat(dbName); os.IsNotExist(err) {
 		return false
 	}
@@ -133,4 +123,22 @@ func (blc *Blockchain) PrintChain() {
 			break
 		}
 	}
+}
+
+//得到区块链
+func BlockchainObject() *Blockchain {
+	db, err := bolt.Open(dbName, 0600, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var tip []byte
+	err = db.View(func(tx *bolt.Tx) error {
+		b := tx.Bucket([]byte(blockTableName))
+		if b != nil {
+			tip = b.Get([]byte("l"))
+		}
+		return nil
+	})
+	return &Blockchain{tip, db}
+
 }
