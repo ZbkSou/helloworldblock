@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e9584a29-d2a7-4d88-a535-86caad44b4db" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/BLC/Transaction.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitingore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitingore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BLC/Blockchain.go" beforeDir="false" afterPath="$PROJECT_DIR$/BLC/Blockchain.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BLC/CLI.go" beforeDir="false" afterPath="$PROJECT_DIR$/BLC/CLI.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bc.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain.db" beforeDir="false" afterPath="$PROJECT_DIR$/blockchain.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BLC/ProofOfWork.go" beforeDir="false" afterPath="$PROJECT_DIR$/BLC/ProofOfWork.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BLC/block.go" beforeDir="false" afterPath="$PROJECT_DIR$/BLC/block.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -230,7 +229,7 @@
       <workItem from="1625147802527" duration="2560000" />
       <workItem from="1625321419957" duration="27000" />
       <workItem from="1625321479063" duration="6905000" />
-      <workItem from="1625396228500" duration="4053000" />
+      <workItem from="1625396228500" duration="7100000" />
     </task>
     <task id="LOCAL-00001" summary="gomod">
       <created>1620720312934</created>
@@ -295,7 +294,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625322436347</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="指令操作">
+      <created>1625409235567</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1625409235567</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -371,7 +377,8 @@
     <MESSAGE value="工作证明检查" />
     <MESSAGE value="区块序列化" />
     <MESSAGE value="区块链迭代器" />
-    <option name="LAST_COMMIT_MESSAGE" value="区块链迭代器" />
+    <MESSAGE value="指令操作" />
+    <option name="LAST_COMMIT_MESSAGE" value="指令操作" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

@@ -14,7 +14,7 @@ type Block struct {
 	//上一个区块的hash
 	PrevBlockHash []byte
 	//	交易数据
-	Data []byte
+	Tx []*Transaction
 	//	时间戳
 	Timestamp int64
 	//	hash
@@ -23,11 +23,16 @@ type Block struct {
 	Nonce int64
 }
 
+func (block *Block) HashTransactions() []byte {
+	var
+	return nil
+}
+
 // NewBlock 创建新的区块
-func NewBlock(data string, height int64, prevBlockHash []byte) *Block {
+func NewBlock(txs []*Transaction, height int64, prevBlockHash []byte) *Block {
 	//创建区块
 	block := &Block{height, prevBlockHash,
-		[]byte(data), time.Now().Unix(), nil, 0}
+		txs, time.Now().Unix(), nil, 0}
 
 	//工作量证明
 	pow := NewProofOfWork(block)
@@ -40,8 +45,8 @@ func NewBlock(data string, height int64, prevBlockHash []byte) *Block {
 }
 
 //创建创世区块
-func CreateGenesisBlock(data string) *Block {
-	return NewBlock(data, 1, []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+func CreateGenesisBlock(txs []*Transaction) *Block {
+	return NewBlock(txs, 1, []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
 }
 
 //将区块序列化成字节数组
