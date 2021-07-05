@@ -2,6 +2,7 @@ package BLC
 
 import (
 	"bytes"
+	"crypto/sha256"
 	"encoding/gob"
 	"fmt"
 	"log"
@@ -14,7 +15,7 @@ type Block struct {
 	//上一个区块的hash
 	PrevBlockHash []byte
 	//	交易数据
-	Tx []*Transaction
+	Txs []*Transaction
 	//	时间戳
 	Timestamp int64
 	//	hash
@@ -23,9 +24,18 @@ type Block struct {
 	Nonce int64
 }
 
+// 将txs 转换字节数组，只需要吧交易中的hash拼接作为哈希值
 func (block *Block) HashTransactions() []byte {
-	var
-	return nil
+
+	var txHashes [][]byte
+	var txHash [32]byte
+
+	for _, tx := range block.Txs {
+		txHashes = append(txHashes, tx.TxHash)
+	}
+	txHash = sha256.Sum256(bytes.Join(txHashes, []byte{}))
+
+	return txHash[:]
 }
 
 // NewBlock 创建新的区块

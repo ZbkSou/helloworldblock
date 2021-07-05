@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e9584a29-d2a7-4d88-a535-86caad44b4db" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/BLC/Transaction.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitingore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitingore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BLC/Transaction_TxOutput.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BLC/ProofOfWork.go" beforeDir="false" afterPath="$PROJECT_DIR$/BLC/ProofOfWork.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BLC/Blockchain.go" beforeDir="false" afterPath="$PROJECT_DIR$/BLC/Blockchain.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BLC/Transaction.go" beforeDir="false" afterPath="$PROJECT_DIR$/BLC/Transaction.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BLC/block.go" beforeDir="false" afterPath="$PROJECT_DIR$/BLC/block.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -133,15 +133,13 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected="Go Build.go build main.go (1)">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -230,6 +228,7 @@
       <workItem from="1625321419957" duration="27000" />
       <workItem from="1625321479063" duration="6905000" />
       <workItem from="1625396228500" duration="7100000" />
+      <workItem from="1625496394999" duration="4778000" />
     </task>
     <task id="LOCAL-00001" summary="gomod">
       <created>1620720312934</created>

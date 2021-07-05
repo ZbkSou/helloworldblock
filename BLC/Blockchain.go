@@ -24,7 +24,7 @@ type BlockchainIterator struct {
 }
 
 //创建带有创世区块的区块链
-func CreateBlockchainWithGenesisBlock(data string) *Blockchain {
+func CreateBlockchainWithGenesisBlock(txs []*Transaction) *Blockchain {
 	//判断数据库是否存在
 	if DBExists() {
 		fmt.Println("创世区块已经存在")
@@ -48,7 +48,7 @@ func CreateBlockchainWithGenesisBlock(data string) *Blockchain {
 		}
 		if b != nil {
 			// 创建创世区块
-			genesisBlock := CreateGenesisBlock(data)
+			genesisBlock := CreateGenesisBlock(txs)
 			// 将创世区块储存到表
 			err := b.Put(genesisBlock.Hash, genesisBlock.Serialize())
 			if err != nil {
@@ -67,7 +67,7 @@ func CreateBlockchainWithGenesisBlock(data string) *Blockchain {
 }
 
 //增加区块到链
-func (blc *Blockchain) AddBlockToBlockchain(data string) {
+func (blc *Blockchain) AddBlockToBlockchain(txs []*Transaction) {
 	err := blc.DB.Update(func(tx *bolt.Tx) error {
 		//获取表
 		b := tx.Bucket([]byte(blockTableName))
@@ -76,7 +76,7 @@ func (blc *Blockchain) AddBlockToBlockchain(data string) {
 			blockBytes := b.Get(blc.Tip)
 			block := DeserializeBlock(blockBytes)
 			//创建区块
-			newBlock := NewBlock(data, block.Height+1, block.Hash)
+			newBlock := NewBlock(txs, block.Height+1, block.Hash)
 			//保存到数据库
 			err := b.Put(newBlock.Hash, newBlock.Serialize())
 			if err != nil {
@@ -112,7 +112,7 @@ func (blc *Blockchain) PrintChain() {
 		fmt.Println("===================")
 		fmt.Printf("height : %d\n", block.Height)
 		fmt.Printf("PrevBlockHash : %x\n", block.PrevBlockHash)
-		fmt.Printf("Data : %s\n", block.Data)
+		fmt.Printf("Data : %v\n", block.Txs)
 		fmt.Printf("Timestamp : %s\n", time.Unix(block.Timestamp, 0).Format("2006-01-02 03:04:05 PM"))
 		fmt.Printf("Hash : %x\n", block.Hash)
 		fmt.Printf("Nonce : %d\n", block.Nonce)
