@@ -19,8 +19,10 @@ func NewCoinBaseTransaction(address string) *Transaction {
 	txOutput := &TXOutput{10, address}
 	txCoinBase := &Transaction{
 		[]byte{},
+		[]*TXintput{txInput},
+		[]*TXOutput{txOutput},
 	}
-	return &Transaction{}
+	return txCoinBase
 
 }
 
