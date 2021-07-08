@@ -1,5 +1,11 @@
 package BLC
 
+import (
+	"bytes"
+	"encoding/ascii85"
+	"encoding/gob"
+)
+
 //UTXO
 type Transaction struct {
 	//1 交易hash
@@ -22,7 +28,22 @@ func NewCoinBaseTransaction(address string) *Transaction {
 		[]*TXintput{txInput},
 		[]*TXOutput{txOutput},
 	}
+	txCoinBase.TxHash
 	return txCoinBase
+
+}
+
+func (tx *Transaction) HashTransaction() []byte {
+	var result bytes.Buffer
+	encode := gob.NewEncoder(&result)
+	err := encode.Encode(tx)
+
+}
+
+func (tx *Transaction) Serialize() []byte {
+	var result bytes.Buffer
+	encode := gob.NewEncoder(&result)
+	err := encode.Encode()
 
 }
 
