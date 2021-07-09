@@ -13,7 +13,7 @@ type CLI struct {
 func printUsage() {
 
 	fmt.Println("\nUsage:")
-	fmt.Println("\t createblockchain -data -- 交易数据 ")
+	fmt.Println("\t createblockchain -address -- 交易数据 ")
 	fmt.Println("\t addblock -data DATA -- 交易数据")
 	fmt.Println("\t printchain -- 输出区块信息")
 }
@@ -56,7 +56,7 @@ func (cli *CLI) Run() {
 
 	flagAddBlockData := addBlockCmd.String("data", "zbk", "交易数据")
 
-	flagCreateBlockchainWithData := createblockchainCmd.String("data", "Genesis block data ......", "创世块")
+	flagCreateBlockchainWithAddress := createblockchainCmd.String("address", "Genesis block data ......", "创建创世块的地址")
 
 	switch os.Args[1] {
 	case "addblock":
@@ -96,12 +96,13 @@ func (cli *CLI) Run() {
 
 	//创建区块链
 	if createblockchainCmd.Parsed() {
-		if *flagCreateBlockchainWithData == "" {
+		if *flagCreateBlockchainWithAddress == "" {
+
 			printUsage()
 			os.Exit(1)
 		}
-		fmt.Println(*flagCreateBlockchainWithData)
-		cli.createGenesisBlockchain(*flagCreateBlockchainWithData)
+		fmt.Println(*flagCreateBlockchainWithAddress)
+		cli.createGenesisBlockchain(*flagCreateBlockchainWithAddress)
 	}
 
 }

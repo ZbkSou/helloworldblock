@@ -2,8 +2,9 @@ package BLC
 
 import (
 	"bytes"
-	"encoding/ascii85"
+	"crypto/sha256"
 	"encoding/gob"
+	"log"
 )
 
 //UTXO
@@ -28,22 +29,30 @@ func NewCoinBaseTransaction(address string) *Transaction {
 		[]*TXintput{txInput},
 		[]*TXOutput{txOutput},
 	}
-	txCoinBase.TxHash
+	txCoinBase.HashTransaction()
 	return txCoinBase
 
 }
 
-func (tx *Transaction) HashTransaction() []byte {
+func (tx *Transaction) HashTransaction() {
 	var result bytes.Buffer
 	encode := gob.NewEncoder(&result)
 	err := encode.Encode(tx)
-
+	if err != nil {
+		log.Panic(err)
+	}
+	hash := sha256.Sum256(result.Bytes())
+	tx.TxHash = hash[:]
 }
 
 func (tx *Transaction) Serialize() []byte {
 	var result bytes.Buffer
 	encode := gob.NewEncoder(&result)
-	err := encode.Encode()
+	err := encode.Encode(tx)
+	if err != nil {
+		log.Panic(err)
+	}
+	return result.Bytes()
 
 }
 
