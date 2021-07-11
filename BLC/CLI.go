@@ -26,14 +26,14 @@ func isValidArgs() {
 
 }
 
-func (cli *CLI) addBlock(data string) {
+func (cli *CLI) addBlock(txs []*Transaction) {
 	if DBExists() == false {
 		fmt.Println("数据不存在....")
 		os.Exit(1)
 	}
 	blockchain := BlockchainObject()
 	defer blockchain.DB.Close()
-	blockchain.AddBlockToBlockchain(data)
+	blockchain.AddBlockToBlockchain(txs)
 }
 func (cli *CLI) printchain() {
 	if DBExists() == false {
@@ -44,8 +44,8 @@ func (cli *CLI) printchain() {
 	defer blockchain.DB.Close()
 	blockchain.PrintChain()
 }
-func (cli *CLI) createGenesisBlockchain(data string) {
-	CreateBlockchainWithGenesisBlock(data)
+func (cli *CLI) createGenesisBlockchain(address string) {
+	CreateBlockchainWithGenesisBlock(address)
 	BlockchainObject().DB.Close()
 }
 func (cli *CLI) Run() {
@@ -85,7 +85,7 @@ func (cli *CLI) Run() {
 			os.Exit(1)
 		}
 		fmt.Println(*flagAddBlockData)
-		cli.addBlock(*flagAddBlockData)
+		cli.addBlock([]*Transaction{})
 	}
 
 	// 打印所有区块
@@ -97,7 +97,7 @@ func (cli *CLI) Run() {
 	//创建区块链
 	if createblockchainCmd.Parsed() {
 		if *flagCreateBlockchainWithAddress == "" {
-
+			fmt.Println("地址不能为空")
 			printUsage()
 			os.Exit(1)
 		}

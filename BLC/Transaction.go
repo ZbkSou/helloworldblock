@@ -8,6 +8,7 @@ import (
 )
 
 //UTXO
+//结构体大写公开访问
 type Transaction struct {
 	//1 交易hash
 	TxHash []byte
@@ -29,12 +30,15 @@ func NewCoinBaseTransaction(address string) *Transaction {
 		[]*TXintput{txInput},
 		[]*TXOutput{txOutput},
 	}
+	//设置hash值
 	txCoinBase.HashTransaction()
 	return txCoinBase
 
 }
 
+//
 func (tx *Transaction) HashTransaction() {
+	//作为结果接收变量
 	var result bytes.Buffer
 	encode := gob.NewEncoder(&result)
 	err := encode.Encode(tx)
