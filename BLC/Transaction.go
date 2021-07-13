@@ -36,7 +36,7 @@ func NewCoinBaseTransaction(address string) *Transaction {
 
 }
 
-//
+//对 transaction 序列化之后hash
 func (tx *Transaction) HashTransaction() {
 	//作为结果接收变量
 	var result bytes.Buffer
@@ -47,17 +47,6 @@ func (tx *Transaction) HashTransaction() {
 	}
 	hash := sha256.Sum256(result.Bytes())
 	tx.TxHash = hash[:]
-}
-
-func (tx *Transaction) Serialize() []byte {
-	var result bytes.Buffer
-	encode := gob.NewEncoder(&result)
-	err := encode.Encode(tx)
-	if err != nil {
-		log.Panic(err)
-	}
-	return result.Bytes()
-
 }
 
 //1.2 转账产生transaction

@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e9584a29-d2a7-4d88-a535-86caad44b4db" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BLC/Blockchain.go" beforeDir="false" afterPath="$PROJECT_DIR$/BLC/Blockchain.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BLC/CLI.go" beforeDir="false" afterPath="$PROJECT_DIR$/BLC/CLI.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BLC/Transaction.go" beforeDir="false" afterPath="$PROJECT_DIR$/BLC/Transaction.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain.db" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.exe" beforeDir="false" afterPath="$PROJECT_DIR$/main.exe" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -134,13 +131,15 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected="Go Build.go build main.go (1)">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -233,7 +232,8 @@
       <workItem from="1625670167138" duration="2524000" />
       <workItem from="1625757247719" duration="1462000" />
       <workItem from="1625788708886" duration="2207000" />
-      <workItem from="1625990074776" duration="7095000" />
+      <workItem from="1625990074776" duration="8220000" />
+      <workItem from="1626185265737" duration="2638000" />
     </task>
     <task id="LOCAL-00001" summary="gomod">
       <created>1620720312934</created>
@@ -333,7 +333,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625759323987</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="打印操作">
+      <created>1626015981728</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1626015981728</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -410,7 +417,8 @@
     <MESSAGE value="区块序列化" />
     <MESSAGE value="区块链迭代器" />
     <MESSAGE value="指令操作" />
-    <option name="LAST_COMMIT_MESSAGE" value="指令操作" />
+    <MESSAGE value="打印操作" />
+    <option name="LAST_COMMIT_MESSAGE" value="打印操作" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
