@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto/sha256"
 	"encoding/gob"
+	"encoding/hex"
 	"log"
 )
 
@@ -24,7 +25,7 @@ type Transaction struct {
 func NewCoinBaseTransaction(address string) *Transaction {
 
 	txInput := &TXintput{[]byte{}, -1, "Genesis Data"}
-	txOutput := &TXOutput{10, address}
+	txOutput := &TXOutput{1000, address}
 	txCoinBase := &Transaction{
 		[]byte{},
 		[]*TXintput{txInput},
@@ -50,3 +51,27 @@ func (tx *Transaction) HashTransaction() {
 }
 
 //1.2 转账产生transaction
+
+func NewSimpleTransaction(from string, to string, amount int) *Transaction {
+	var txInputs []*TXintput
+	var txOutputs []*TXOutput
+	//来源
+	b, _ := hex.DecodeString("")
+	txInput := &TXintput{b, 10, from}
+
+	txInputs = append(txInputs, txInput)
+	//消费
+	txOutput := &TXOutput{4, to}
+	txOutputs = append(txOutputs, txOutput)
+	//找零
+	txOutput = &TXOutput{10 - 4, from}
+	txOutputs = append(txOutputs, txOutput)
+	tx := &Transaction{
+		[]byte{},
+		txInputs,
+		txOutputs,
+	}
+	//设置hash值
+	tx.HashTransaction()
+	return tx
+}

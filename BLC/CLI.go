@@ -14,7 +14,7 @@ func printUsage() {
 
 	fmt.Println("\nUsage:")
 	fmt.Println("\t createblockchain -address -- 交易数据 ")
-	fmt.Println("\t addblock -data DATA -- 交易数据")
+	fmt.Println("\t send -from From -to to -amount amount -- 交易数据")
 	fmt.Println("\t printchain -- 输出区块信息")
 }
 
@@ -44,23 +44,40 @@ func (cli *CLI) printchain() {
 	defer blockchain.DB.Close()
 	blockchain.PrintChain()
 }
+
+//创建创世区块
 func (cli *CLI) createGenesisBlockchain(address string) {
-	CreateBlockchainWithGenesisBlock(address)
-	BlockchainObject().DB.Close()
+	blockchain := CreateBlockchainWithGenesisBlock(address)
+	defer blockchain.DB.Close()
 }
+
+//发送功能
+func (cli *CLI) send(from []string, to []string, amount []string) {
+	if DBExists() == false {
+		fmt.Println("数据不存在....")
+		os.Exit(1)
+	}
+	blockchain := BlockchainObject()
+	defer blockchain.DB.Close()
+	blockchain.MineNewBlock(from, to, amount)
+}
+
 func (cli *CLI) Run() {
 	isValidArgs()
-	addBlockCmd := flag.NewFlagSet("addblock", flag.ExitOnError)
+	sendBlockCmd := flag.NewFlagSet("send", flag.ExitOnError)
+
 	printChainCmd := flag.NewFlagSet("printchain", flag.ExitOnError)
 	createblockchainCmd := flag.NewFlagSet("createblockchain", flag.ExitOnError)
 
-	flagAddBlockData := addBlockCmd.String("data", "zbk", "交易数据")
+	flagSendFrom := sendBlockCmd.String("from", "", "转账来源地址")
+	flagSendTo := sendBlockCmd.String("to", "", "转账目的地址")
+	flagSendAmount := sendBlockCmd.String("amount", "", "转账金额")
 
 	flagCreateBlockchainWithAddress := createblockchainCmd.String("address", "Genesis block data ......", "创建创世块的地址")
 
 	switch os.Args[1] {
-	case "addblock":
-		err := addBlockCmd.Parse(os.Args[2:])
+	case "send":
+		err := sendBlockCmd.Parse(os.Args[2:])
 		if err != nil {
 			log.Panic(err)
 		}
@@ -78,14 +95,18 @@ func (cli *CLI) Run() {
 		printUsage()
 		os.Exit(1)
 	}
-	//增添区块信息
-	if addBlockCmd.Parsed() {
-		if *flagAddBlockData == "" {
+	//处理转账信息
+	if sendBlockCmd.Parsed() {
+		if *flagSendFrom == "" || *flagSendTo == "" || *flagSendAmount == "" {
 			printUsage()
 			os.Exit(1)
 		}
-		fmt.Println(*flagAddBlockData)
-		cli.addBlock([]*Transaction{})
+
+		fmt.Println()
+		from := JSONToArray(*flagSendFrom)
+		to := JSONToArray(*flagSendTo)
+		amount := JSONToArray(*flagSendAmount)
+		cli.send(from, to, amount)
 	}
 
 	// 打印所有区块
@@ -101,8 +122,6 @@ func (cli *CLI) Run() {
 			printUsage()
 			os.Exit(1)
 		}
-		fmt.Println(*flagCreateBlockchainWithAddress)
 		cli.createGenesisBlockchain(*flagCreateBlockchainWithAddress)
 	}
-
 }
