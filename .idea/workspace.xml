@@ -9,8 +9,7 @@
       <change beforePath="$PROJECT_DIR$/BLC/Blockchain.go" beforeDir="false" afterPath="$PROJECT_DIR$/BLC/Blockchain.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BLC/CLI.go" beforeDir="false" afterPath="$PROJECT_DIR$/BLC/CLI.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BLC/Transaction.go" beforeDir="false" afterPath="$PROJECT_DIR$/BLC/Transaction.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BLC/utils.go" beforeDir="false" afterPath="$PROJECT_DIR$/BLC/utils.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.exe" beforeDir="false" afterPath="$PROJECT_DIR$/main.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BLC/Transaction_TxInput.go" beforeDir="false" afterPath="$PROJECT_DIR$/BLC/Transaction_TxInput.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +117,7 @@
     <property name="configurable.Project.GOPATH.is.expanded" value="true" />
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
     <property name="go.import.settings.migrated" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../95小红书/code(1)/彭唱项目后台对接项目/xhsworker" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -240,7 +239,12 @@
       <workItem from="1626523877168" duration="5920000" />
       <workItem from="1626576905474" duration="2901000" />
       <workItem from="1626601261797" duration="2808000" />
-      <workItem from="1626622737516" duration="856000" />
+      <workItem from="1626622737516" duration="952000" />
+      <workItem from="1626705820217" duration="957000" />
+      <workItem from="1626967134054" duration="592000" />
+      <workItem from="1627139638758" duration="2069000" />
+      <workItem from="1627399434059" duration="1826000" />
+      <workItem from="1627827392197" duration="3541000" />
     </task>
     <task id="LOCAL-00001" summary="gomod">
       <created>1620720312934</created>
@@ -354,7 +358,14 @@
       <option name="project" value="LOCAL" />
       <updated>1626188295574</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="打印操作">
+      <created>1626623626894</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1626623626894</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TimeTrackingManager">

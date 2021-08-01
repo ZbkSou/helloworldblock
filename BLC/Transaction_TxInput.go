@@ -1,7 +1,7 @@
 package BLC
 
 type TXintput struct {
-	//交易的id
+	//来源订单交易的id
 	TxHash []byte
 	//储存txoutput在vout的索引
 	Vout int

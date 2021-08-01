@@ -53,6 +53,10 @@ func (tx *Transaction) HashTransaction() {
 //1.2 转账产生transaction
 
 func NewSimpleTransaction(from string, to string, amount int) *Transaction {
+
+	//找到from下所有未花费交易
+	unSpentTx := UnSpentTransationsWithAdress(from)
+
 	var txInputs []*TXintput
 	var txOutputs []*TXOutput
 	//来源

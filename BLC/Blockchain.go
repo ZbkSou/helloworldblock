@@ -198,3 +198,9 @@ func (blc *Blockchain) MineNewBlock(from []string, to []string, amount []string)
 		return nil
 	})
 }
+
+//获得地址的所有未使用订单
+func UnSpentTransationsWithAdress(address string) []*Transaction {
+
+	return nil
+}

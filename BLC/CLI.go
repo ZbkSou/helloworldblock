@@ -16,6 +16,7 @@ func printUsage() {
 	fmt.Println("\t createblockchain -address -- 交易数据 ")
 	fmt.Println("\t send -from From -to to -amount amount -- 交易数据")
 	fmt.Println("\t printchain -- 输出区块信息")
+	fmt.Println("\t getbalance -- 查询账号余额")
 }
 
 func isValidArgs() {
@@ -68,13 +69,13 @@ func (cli *CLI) Run() {
 
 	printChainCmd := flag.NewFlagSet("printchain", flag.ExitOnError)
 	createblockchainCmd := flag.NewFlagSet("createblockchain", flag.ExitOnError)
-
+	getbalanceCmd := flag.NewFlagSet("getbalance", flag.ExitOnError)
 	flagSendFrom := sendBlockCmd.String("from", "", "转账来源地址")
 	flagSendTo := sendBlockCmd.String("to", "", "转账目的地址")
 	flagSendAmount := sendBlockCmd.String("amount", "", "转账金额")
 
 	flagCreateBlockchainWithAddress := createblockchainCmd.String("address", "Genesis block data ......", "创建创世块的地址")
-
+	getbalanceCmdWithAdress := getbalanceCmd.String("address", "", "查询账号余额")
 	switch os.Args[1] {
 	case "send":
 		err := sendBlockCmd.Parse(os.Args[2:])
@@ -88,6 +89,11 @@ func (cli *CLI) Run() {
 		}
 	case "createblockchain":
 		err := createblockchainCmd.Parse(os.Args[2:])
+		if err != nil {
+			log.Panic(err)
+		}
+	case "getbalance":
+		err := getbalanceCmd.Parse(os.Args[2:])
 		if err != nil {
 			log.Panic(err)
 		}
@@ -117,6 +123,15 @@ func (cli *CLI) Run() {
 
 	//创建区块链
 	if createblockchainCmd.Parsed() {
+		if *flagCreateBlockchainWithAddress == "" {
+			fmt.Println("地址不能为空")
+			printUsage()
+			os.Exit(1)
+		}
+		cli.createGenesisBlockchain(*flagCreateBlockchainWithAddress)
+	}
+	//创建区块链
+	if getbalanceCmd.Parsed() {
 		if *flagCreateBlockchainWithAddress == "" {
 			fmt.Println("地址不能为空")
 			printUsage()
