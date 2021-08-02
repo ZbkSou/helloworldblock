@@ -63,6 +63,9 @@ func (cli *CLI) send(from []string, to []string, amount []string) {
 	blockchain.MineNewBlock(from, to, amount)
 }
 
+func (cli *CLI) getBalance(address string) {
+	UnSpentTransationsWithAdress(address)
+}
 func (cli *CLI) Run() {
 	isValidArgs()
 	sendBlockCmd := flag.NewFlagSet("send", flag.ExitOnError)
@@ -132,11 +135,11 @@ func (cli *CLI) Run() {
 	}
 	//创建区块链
 	if getbalanceCmd.Parsed() {
-		if *flagCreateBlockchainWithAddress == "" {
+		if *getbalanceCmdWithAdress == "" {
 			fmt.Println("地址不能为空")
 			printUsage()
 			os.Exit(1)
 		}
-		cli.createGenesisBlockchain(*flagCreateBlockchainWithAddress)
+		cli.getBalance(*getbalanceCmdWithAdress)
 	}
 }

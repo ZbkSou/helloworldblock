@@ -200,7 +200,16 @@ func (blc *Blockchain) MineNewBlock(from []string, to []string, amount []string)
 }
 
 //获得地址的所有未使用订单
-func UnSpentTransationsWithAdress(address string) []*Transaction {
+func (blc *Blockchain) UnSpentTransationsWithAdress(address string) []*Transaction {
+	blockchainIterator := blc.Iterator()
+	for {
+		block := blockchainIterator.Next()
+		var hashInt big.Int
+		hashInt.SetBytes(block.PrevBlockHash)
+		if hashInt.Cmp(big.NewInt(0)) == 1 {
+			break
+		}
 
+	}
 	return nil
 }
