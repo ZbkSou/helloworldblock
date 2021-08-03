@@ -7,7 +7,8 @@
     <list default="true" id="e9584a29-d2a7-4d88-a535-86caad44b4db" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BLC/Blockchain.go" beforeDir="false" afterPath="$PROJECT_DIR$/BLC/Blockchain.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BLC/CLI.go" beforeDir="false" afterPath="$PROJECT_DIR$/BLC/CLI.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BLC/Transaction_TxInput.go" beforeDir="false" afterPath="$PROJECT_DIR$/BLC/Transaction_TxInput.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BLC/Transaction_TxOutput.go" beforeDir="false" afterPath="$PROJECT_DIR$/BLC/Transaction_TxOutput.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,7 +245,10 @@
       <workItem from="1627399434059" duration="1826000" />
       <workItem from="1627827392197" duration="3767000" />
       <workItem from="1627914559150" duration="1306000" />
-      <workItem from="1627916348592" duration="1372000" />
+      <workItem from="1627916348592" duration="1434000" />
+      <workItem from="1628002921639" duration="1449000" />
+      <workItem from="1628004732959" duration="54000" />
+      <workItem from="1628004803760" duration="336000" />
     </task>
     <task id="LOCAL-00001" summary="gomod">
       <created>1620720312934</created>
@@ -372,7 +376,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627831951275</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="打印操作">
+      <created>1627917894756</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1627917894756</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TimeTrackingManager">

@@ -1,6 +1,7 @@
 package BLC
 
 import (
+	"encoding/hex"
 	"fmt"
 	"github.com/boltdb/bolt"
 	"log"
@@ -202,8 +203,32 @@ func (blc *Blockchain) MineNewBlock(from []string, to []string, amount []string)
 //获得地址的所有未使用订单
 func (blc *Blockchain) UnSpentTransationsWithAdress(address string) []*Transaction {
 	blockchainIterator := blc.Iterator()
+
+	var unSpentTxs []*Transaction
+	spentTXOutputs := make(map[string][]int)
+
 	for {
 		block := blockchainIterator.Next()
+
+		for _, tx := range block.Txs {
+
+			//vins
+			for _, in := range tx.Vins {
+				//是否可以解锁
+				if in.UnLockWithAddress(address) {
+					key := hex.EncodeToString(in.TxHash)
+					spentTXOutputs[key] = append(spentTXOutputs[key], in.Vout)
+				}
+			}
+			//vout
+			for _, out := range tx.Vouts {
+				if out.UnLockScriptPubKeyWithAddress(address) {
+
+				}
+			}
+
+		}
+
 		var hashInt big.Int
 		hashInt.SetBytes(block.PrevBlockHash)
 		if hashInt.Cmp(big.NewInt(0)) == 1 {

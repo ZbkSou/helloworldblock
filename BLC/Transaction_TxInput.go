@@ -8,3 +8,9 @@ type TXintput struct {
 	//用户签名
 	ScriptSig string
 }
+
+//判断当前消费归属
+func (txInput *TXintput) UnLockWithAddress(address string) bool {
+	return txInput.ScriptSig == address
+
+}
