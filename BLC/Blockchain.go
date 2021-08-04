@@ -201,10 +201,10 @@ func (blc *Blockchain) MineNewBlock(from []string, to []string, amount []string)
 }
 
 //获得地址的所有未使用订单
-func (blc *Blockchain) UnSpentTransationsWithAdress(address string) []*Transaction {
+func (blc *Blockchain) UTXOsWithAdress(address string) []*UTXO {
 	blockchainIterator := blc.Iterator()
 
-	var unSpentTxs []*Transaction
+	var unUTXOs []*UTXO
 	spentTXOutputs := make(map[string][]int)
 
 	for {
@@ -213,17 +213,37 @@ func (blc *Blockchain) UnSpentTransationsWithAdress(address string) []*Transacti
 		for _, tx := range block.Txs {
 
 			//vins
-			for _, in := range tx.Vins {
-				//是否可以解锁
-				if in.UnLockWithAddress(address) {
-					key := hex.EncodeToString(in.TxHash)
-					spentTXOutputs[key] = append(spentTXOutputs[key], in.Vout)
+			if tx.IsCoinBaseTransaction() == false {
+				for _, in := range tx.Vins {
+					//是否可以解锁
+					if in.UnLockWithAddress(address) {
+						key := hex.EncodeToString(in.TxHash)
+						spentTXOutputs[key] = append(spentTXOutputs[key], in.Vout)
+					}
 				}
 			}
-			//vout
-			for _, out := range tx.Vouts {
-				if out.UnLockScriptPubKeyWithAddress(address) {
 
+			//vout
+			for index, out := range tx.Vouts {
+				if out.UnLockScriptPubKeyWithAddress(address) {
+					if spentTXOutputs != nil {
+						if len(spentTXOutputs) != 0 {
+							for txHash, indexArray := range spentTXOutputs {
+								for _, i := range indexArray {
+									if index == i && txHash == hex.EncodeToString(tx.TxHash) {
+										continue
+									} else {
+										utxo := &UTXO{tx.TxHash, index, out}
+										unUTXOs = append(unUTXOs, utxo)
+									}
+								}
+							}
+						} else {
+							utxo := &UTXO{tx.TxHash, index, out}
+							unUTXOs = append(unUTXOs, utxo)
+						}
+
+					}
 				}
 			}
 
@@ -236,5 +256,15 @@ func (blc *Blockchain) UnSpentTransationsWithAdress(address string) []*Transacti
 		}
 
 	}
-	return nil
+	return unUTXOs
+}
+
+//查询余额
+func (blockchain *Blockchain) GetBalance(address string) int64 {
+	utxos := blockchain.UTXOsWithAdress(address)
+	var amount int64
+	for _, out := range utxos {
+		amount = amount + out.Output.Value
+	}
+	return amount
 }

@@ -19,6 +19,11 @@ type Transaction struct {
 	Vouts []*TXOutput
 }
 
+//判断当前交易是否是coinbase交易
+func (tx *Transaction) IsCoinBaseTransaction() bool {
+	return len(tx.TxHash) == 0 && tx.Vins[0].Vout == -1
+}
+
 //1 Transaction 创建分两种情况
 //1.1 区块链创建时transaction
 
