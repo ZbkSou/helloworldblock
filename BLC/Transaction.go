@@ -57,19 +57,21 @@ func (tx *Transaction) HashTransaction() {
 
 //1.2 转账产生transaction
 
-func NewSimpleTransaction(from string, to string, amount int) *Transaction {
+func NewSimpleTransaction(from string, to string, amount int, blc *Blockchain) *Transaction {
 
-	//找到from下所有未花费交易
-	unSpentTx := UnSpentTransationsWithAdress(from)
+	//获得所有未花费的transaction
+	unUTXOs := blc.UTXOsWithAdress(from)
+
+	money, spendableUTXODic := blc.FindSpendableUTXOS(from, amount)
 
 	var txInputs []*TXintput
 	var txOutputs []*TXOutput
 	//来源
 	b, _ := hex.DecodeString("")
 	txInput := &TXintput{b, 10, from}
-
-	txInputs = append(txInputs, txInput)
 	//消费
+	txInputs = append(txInputs, txInput)
+	//转账
 	txOutput := &TXOutput{4, to}
 	txOutputs = append(txOutputs, txOutput)
 	//找零

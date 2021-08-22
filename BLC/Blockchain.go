@@ -171,7 +171,7 @@ func (blc *Blockchain) MineNewBlock(from []string, to []string, amount []string)
 	//1通过相关算法建立transaction数组
 	//1.1 建立一笔交易
 	value, _ := strconv.Atoi(amount[0])
-	tx := NewSimpleTransaction(from[0], to[0], value)
+	tx := NewSimpleTransaction(from[0], to[0], value, blc)
 	//1.2交易增加到数组
 	var txs []*Transaction
 	txs = append(txs, tx)
@@ -267,4 +267,9 @@ func (blockchain *Blockchain) GetBalance(address string) int64 {
 		amount = amount + out.Output.Value
 	}
 	return amount
+}
+
+//查找可用utxo
+func (Blockchain *Blockchain) FindSpendableUTXOS(from string, amount int) (int, map[string][]int) {
+
 }
