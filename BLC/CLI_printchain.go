@@ -1,12 +1,16 @@
 package BLC
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
-func printUsage() {
-
-	fmt.Println("\nUsage:")
-	fmt.Println("\t createblockchain -address -- 交易数据 ")
-	fmt.Println("\t send -from From -to to -amount amount -- 交易数据")
-	fmt.Println("\t printchain -- 输出区块信息")
-	fmt.Println("\t getbalance -- 查询账号余额")
+func (cli *CLI) printchain() {
+	if DBExists() == false {
+		fmt.Println("数据不存在....")
+		os.Exit(1)
+	}
+	blockchain := BlockchainObject()
+	defer blockchain.DB.Close()
+	blockchain.PrintChain()
 }
